@@ -1,0 +1,96 @@
+Figma MCP Master Rules (Snatty App)
+
+- Figma MCP 연동 기본 원칙
+  - 사용자가 **"선택한 노드 구현해 줘"**, **"이 컴포넌트 구현해 줘"**, 또는 Figma 디자인 URL/노드 ID를 제공하면:
+    - 우선 `user-Figma.get_design_context`를 호출해 선택 노드의 구조, 스펙, Variant, 스타일 정보를 가져온다.
+    - 필요한 경우에만 `get_metadata` / `get_variable_defs`를 추가로 호출한다 (파일/변수 전체 스캔이 필요할 때).
+    - 이미 동일 노드 ID에 대한 정보가 `master-data.json` 등에 정리되어 있다면, 우선 그 내용을 참고하고, 정보가 부족할 때만 MCP를 다시 호출한다.
+
+- 디자인 토큰 우선 사용
+  - MCP에서 얻은 **Hex 컬러(#046253 등)**, **간격(8px)**, **폰트 사이즈**를 그대로 하드코딩하지 않는다.
+  - 항상 `@adailyrecord/design-tokens`(프리미티브), `src/app/design-tokens/semantic.css`(Figma 시맨틱: 색·Grid·Typography), `globals.css`에 정의된 토큰을 우선 사용한다.
+    - 예시: `#046253` → `bg-[color:var(--colorButtonContainerPrimaryDefault,#046253)]`
+    - 예시: `8px` 간격 → `gap-[var(--Grid-Gap-M,8px)]`, `px-[var(--Grid-Padding-S,8px)]` 등 기존 Grid/Spacing 토큰을 우선 매핑.
+  - MCP의 변수 이름(`Color/button container/primary/default`, `Typography/font-size/Headline M` 등)은 가능한 한 **이미 정의된 CSS 변수 이름**(`--colorButtonContainerPrimaryDefault`, `--Typography-font-size-Headline-M` 등)으로 연결한다.
+
+- 레이아웃 / 리사이징 규칙
+  - Figma의 **Fill container**:
+    - 수평/수직 확장 목적일 경우 Tailwind의 `flex-1`, `min-w-px`, `min-h-px`, `w-full` 등을 사용하여 **부모 컨테이너를 가득 채우는 방향**으로 구현한다.
+  - Figma의 **Hug contents**:
+    - 콘텐츠 크기에 맞게 줄어드는 것이 목적이므로, 불필요한 `flex-1`, `w-full`을 사용하지 않고 자연스럽게 콘텐츠 크기에 맞도록 구현한다.
+  - Figma의 **고정 사이즈**:
+    - 반드시 필요한 경우에만 `w-[390px]`, `h-[56px]` 같은 고정 폭/높이를 사용한다.
+    - 가능하면 Grid/Height/Width 토큰(`--Grid-Height-L` 등)을 우선 사용하고, 디바이스 프레임(예: iPhone 15 Pro 390x844)은 **루트 컨테이너에서만 고정**한다.
+
+- 상태 값 / Variant 매핑
+  - Figma Variant 상태(`Default`, `Hover`, `Pressed`, `Disabled`)는 **React 상태보다 CSS 상태로 먼저 처리**한다.
+    - Hover → Tailwind `hover:` 클래스로 표현 (`hover:bg-...` 등).
+    - Pressed/Active → Tailwind `active:` 또는 `data-[state=pressed]:` 패턴이 있으면 우선 사용.
+    - Disabled → `disabled:` 가상 클래스와 `disabled` 속성을 함께 사용.
+  - 실제 상호작용(토글/선택/포커스)은 필요한 최소한의 React state로 처리하되, **색/테두리/배경 변화는 가급적 CSS 가상 클래스에 위임**한다.
+
+- 컴포넌트 우선 사용 원칙
+  - 새 UI를 구현할 때는 항상 **이미 만든 컴포넌트**를 먼저 고려한다:
+    - 버튼 계열 → `Button`, `ButtonSet`, `Fab`
+    - 입력/선택 → `Checkbox`, `Radio`, `ToggleSwitch`, `List`, `ListItem`
+    - 날짜 → `Calendar`, `CalendarMonth`, `CalendarWeek`, `CalendarDay`
+    - 피드백 → `ToastMessage`
+    - 내비게이션 → `TopNavBar`, `BottomNavBar`
+    - 카드 → `Card`, `CardOneLineWithIcon`, `CardOneLineHor`
+    - 아이콘 → `FunctionalIconGrid`, `WeatherIconGrid`, `EmotionIconGrid`, `EmotionIcon`
+  - MCP 코드 샘플에 버튼/리스트/토글 등이 인라인으로 들어있어도, 프로젝트 내 대응 컴포넌트가 있다면 **반드시 해당 컴포넌트로 재구성**한다.
+
+- 스크린 vs 컴포넌트 구조
+  - 스크린 단위 구현 시:
+    - 상단/하단 Frame(Top nav, Bottom nav, Button set 등)은 **이미 구현된 컴포넌트**로 조합한다.
+    - 중간 콘텐츠 영역에서만 새로운 레이아웃/조합을 만든다.
+  - MCP에서 가져온 React+Tailwind 코드는 **참고용**으로만 사용하고, 실제 구현은:
+    - Next.js App Router + React Client Component
+    - Tailwind + `clsx` + `tailwind-merge`
+    - 디자인 토큰(CSS variables) 패턴을 따른다.
+
+- FigJam / IA / Flow 활용
+  - FigJam에서 IA, User Flow 노드를 MCP로 읽어올 때:
+    - 이 정보는 **구조/흐름 이해를 위한 메타데이터**로 사용한다.
+    - 바로 코드 레벨 컴포넌트로 변환하지 않고, 우선 “어떤 화면을 어떤 순서로 구현할지”를 설계하는 데 쓴다.
+
+- 재사용 가능한 MCP Master Data 활용
+  - 프로젝트 루트의 `master-data.json`이 존재하면:
+    - 주요 컴포넌트 ID, Variable 정의를 우선 참고하여, 동일 노드/변수에 대한 MCP 호출을 **중복해서 하지 않도록** 시도한다.
+    - 새로운 노드/컴포넌트가 등장할 때만 MCP를 추가 호출한다.
+
+- 인터랙션 / 입력 UX 공통 규칙
+  - 텍스트 입력:
+    - placeholder와 실제 입력 텍스트가 **가능한 한 동일한 타이포/정렬/라인 높이**를 갖도록 한다.
+    - 여러 줄 입력 시 잘리지 않도록 `textarea`의 높이를 내용에 맞춰 자동 조정하고, 필요하면 컨테이너에서 스크롤을 허용한다.
+  - 상태 토글(Checkbox/Radio/Switch/List 내 토글 등):
+    - 클릭 이벤트에서 `e.stopPropagation()`으로 상위 클릭과 구분하고,
+    - 토글 상태는 `useState`로 관리하되, List/Screen 등 상위 레벨에서 **컨트롤드 상태**로 넘기는 것을 우선 고려한다.
+
+- 오류/빌드 안정성
+  - MCP 샘플 코드에 포함된:
+    - 잘못된 이스케이프(`\"`), 잘못된 경로, 미존재 dependency, SVGR 설정 등은 **직접 복사하지 않고** 프로젝트 규칙에 맞게 변환한다.
+  - 빌드/런타임 오류가 발생하면:
+    - 우선 로컬 파일(`src/app/...`)을 기준으로 수정하고,
+    - MCP 코드는 **진실의 근원이 아니라 디자인 참고용**이라는 점을 유지한다.
+
+- Storybook / Autodocs 규칙
+  - 새 컴포넌트를 생성할 때는 가능하면 **동일한 이름의 `.stories.tsx` 파일을 함께 생성**한다.
+    - 예시: `src/app/components/Button.tsx` → `src/stories/Button.stories.tsx`
+  - Storybook의 **autodocs 기능(tags: ["autodocs"])과 args/argTypes**를 적극 활용하여:
+    - Playground 화면을 매번 수정하지 않고도,
+    - 각 컴포넌트의 문서(Props 테이블, 사용 예시)와
+    - Controls 패널을 통한 실시간 UI 테스트(Interaction)를 자동으로 구성한다.
+  - Playground는 “복합 레이아웃/실제 플로우 테스트용”, Storybook은 “컴포넌트 단위 문서/조합 테스트용”으로 역할을 분리한다.
+
+사용자 트리거 문구 예시
+
+- Figma MCP 기반으로 노드 구현을 요청하고 싶을 때, 다음과 같이 말하면 된다:
+  - `선택한 노드 구현해 줘`
+  - `선택한 컴포넌트 스펙대로 맞춰줘`
+  - `이 Figma 링크 기준으로 컴포넌트 만들어줘: <URL>`
+- 그러면 에이전트는 위 규칙에 따라:
+  - 해당 노드 ID를 MCP로 조회 → 디자인/변수/Variant 정보를 수집
+  - 기존 디자인 토큰과 컴포넌트를 우선 사용해 구현
+  - 필요 시 `master-data.json`을 참고해 중복 MCP 호출을 줄이는 방식으로 자동으로 동작해야 한다.
+

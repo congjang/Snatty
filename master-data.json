@@ -1,0 +1,97 @@
+{
+  "fileStructureMetaSource": "/agent-tools/94e09309-a53c-47eb-b3dd-64825ff247b7.txt",
+  "pagesAndComponents": {
+    "keyboardsAndStatus": {
+      "frames": [
+        { "id": "6:7", "name": "Home Indicator" },
+        { "id": "6:16", "name": "Status Bar - iPhone" },
+        { "id": "81:1689", "name": "Keyboard - iPhone" },
+        { "id": "81:1934", "name": "_Background" },
+        { "id": "81:1934", "name": "_Background" },
+        { "id": "81:1934", "name": "_Background" },
+        { "id": "81:1934", "name": "_Background" },
+        { "id": "81:1934", "name": "_Background" },
+        { "id": "81:1934", "name": "_Background" }
+      ],
+      "symbols": [
+        { "id": "81:1917", "name": "Keyboard - iPhone / Type=Default" },
+        { "id": "81:2002", "name": "_Keyboard - iPhone Layouts / Type=Characters" },
+        { "id": "81:2108", "name": "_Keyboard - iPhone Layouts / Type=Letters - Lowercase" },
+        { "id": "81:2249", "name": "_Accessory Bar - Autocorrection / Selection=3" }
+      ]
+    },
+    "remindComponents": {
+      "symbols": [
+        { "id": "139:28386", "name": "wea_sun" },
+        { "id": "139:28585", "name": "Calendar month" },
+        { "id": "139:28588", "name": "happiness" },
+        { "id": "139:28611", "name": "Chevron right" },
+        { "id": "139:28613", "name": "card_1line_with icon" },
+        { "id": "139:28628", "name": "wea_rain" },
+        { "id": "139:28642", "name": "Feed_filled" },
+        { "id": "139:28644", "name": "Feed" },
+        { "id": "139:28658", "name": "Person" },
+        { "id": "139:28660", "name": "Ink pen" },
+        { "id": "139:28662", "name": "plus" },
+        { "id": "139:28651", "name": "item_nav_bar" },
+        { "id": "139:28442", "name": "card_2line_ver" }
+      ]
+    },
+    "variableSets": [
+      { "id": "81:2550", "name": "typography" },
+      { "id": "81:2615", "name": "color palette" },
+      { "id": "81:2568", "name": "M3" },
+      { "id": "128:7440", "name": "global" },
+      { "id": "128:7501", "name": "sementic" },
+      { "id": "138:9570", "name": "typography" },
+      { "id": "139:28417", "name": "global" },
+      { "id": "139:28419", "name": "sementic" },
+      { "id": "139:28425", "name": "typography" }
+    ]
+  },
+  "variablesExport": {
+    "Color/element on container/highlight/disabled": "#ffffff4d",
+    "Typography/font-size/Label L": "18",
+    "Typography/font-family": "pretendard",
+    "Typography/font-weight/Label L": "700",
+    "Label/L": "Font(family: \"Typography/font-family\", style: Bold, size: Typography/font-size/Label L, weight: Typography/font-weight/Label L, lineHeight: 1.2000000476837158, letterSpacing: 0)",
+    "Grid/Gap/M": "8",
+    "Grid/Padding/S": "8",
+    "Grid/Height/L": "56",
+    "Grid/Radius/L": "12",
+    "Color/button container/primary/disabled": "#00000033",
+    "Labels/Primary": "#000000",
+    "Body/Regular": "Font(family: \"SF Pro\", style: Regular, size: 17, weight: 400, lineHeight: 22, letterSpacing: -0.4300000071525574)",
+    "Miscellaneous/Keyboard Accessory Bar - Selection": "#ebedf0",
+    "Callout/Regular": "Font(family: \"SF Pro\", style: Regular, size: 16, weight: 400, lineHeight: 21, letterSpacing: -0.3100000023841858)",
+    "Miscellaneous/Keyboard Emoji + Mic": "#1b1f26b8",
+    "Color/surface/base2/default": "#f2f2f3",
+    "Color/element on container/primary/default": "#03584d",
+    "Typography/font-size/Label M": "16",
+    "Typography/font-weight/Label M": "600",
+    "Label/M": "Font(family: \"Typography/font-family\", style: SemiBold, size: Typography/font-size/Label M, weight: Typography/font-weight/Label M, lineHeight: 1.2000000476837158, letterSpacing: 0)",
+    "Grid/Height/M": "48",
+    "Color/button container/highlight/default": "#ffffff1a",
+    "Color/element/base1/disabled": "#0000004d",
+    "Typography/font-size/Headline M": "28",
+    "Typography/font-weight/Headline L": "700",
+    "Headline/M": "Font(family: \"Typography/font-family\", style: Bold, size: Typography/font-size/Headline M, weight: Typography/font-weight/Headline L, lineHeight: 1.2999999523162842, letterSpacing: 0)",
+    "Typography/font-size/Caption M": "10",
+    "Typography/font-weight/Caption M": "400",
+    "Caption/M": "Font(family: \"Typography/font-family\", style: Regular, size: Typography/font-size/Caption M, weight: Typography-font-weight/Caption M, lineHeight: 1.2000000476837158, letterSpacing: 0)",
+    "Color/surface/base1/default": "#ffffff"
+  },
+  "keyComponentsTop10": [
+    { "id": "139:20556", "name": "기록하기_기본" },
+    { "id": "139:20558", "name": "top_nav_bar" },
+    { "id": "139:20560", "name": "card_1line_with icon" },
+    { "id": "139:20561", "name": "textfield" },
+    { "id": "139:20564", "name": "convert todo" },
+    { "id": "139:20579", "name": "button set" },
+    { "id": "139:28651", "name": "item_nav_bar" },
+    { "id": "139:28642", "name": "Feed_filled" },
+    { "id": "139:28658", "name": "Person" },
+    { "id": "139:28585", "name": "Calendar month" }
+  ]
+}
+

@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@import "./pretendard.css";
+@import "./design-tokens/primitives.css";
+/* Grid 토큰은 `design-tokens/semantic.css`(Figma sementic.light)에 포함 */
+@import "./design-tokens/semantic.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--typographyFontFamily);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--typographyFontFamily, "Pretendard", sans-serif);
+}
+
+/* Hide scrollbars while keeping scroll behavior (app-like UX) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Playground/폼 입력 placeholder — colorElementBase1Disabled 연결 (우선 적용) */
+input::placeholder,
+textarea::placeholder {
+  color: var(--colorElementBase1Disabled, rgba(0, 0, 0, 0.3)) !important;
+}
+/* Playground 영역 한정 (Tailwind 등 덮어쓰기 방지) */
+.playground-placeholder-token input::placeholder,
+.playground-placeholder-token textarea::placeholder {
+  color: var(--colorElementBase1Disabled, rgba(0, 0, 0, 0.3)) !important;
+}
+/* Playground 폼 컨트롤 텍스트 색 — design token (input/textarea/select) */
+.playground-placeholder-token input,
+.playground-placeholder-token textarea,
+.playground-placeholder-token select {
+  color: var(--colorElementBase1Default, #35363a);
+}
+
+/* 인스펙터에서 텍스트 색상 출처 확인용 클래스 (colorElementBase1Default) */
+.playground-form-text {
+  color: var(--colorElementBase1Default, #35363a);
+}
+
+/* Playground 컬러 테마 전환 — 다크 시 배경/카드/섹션 적용 */
+.playground-theme-dark {
+  background: #1c1c1e;
+}
+.playground-theme-dark main {
+  background: #2c2c2e;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+/* main 내부 .bg-white (네비게이션 바 등) */
+.playground-theme-dark .bg-white {
+  background: #3a3a3c;
+}
+.playground-theme-dark .playground-placeholder-token h2,
+.playground-theme-dark .playground-placeholder-token h3 {
+  color: #e5e5e7;
+}
+.playground-theme-dark .playground-placeholder-token .text-zinc-500,
+.playground-theme-dark .playground-placeholder-token .text-zinc-600 {
+  color: #a1a1a6;
+}
+.playground-theme-dark .playground-placeholder-token section.rounded-xl {
+  background: #3a3a3c;
+  border-color: #48484a;
+}
+.playground-theme-dark .playground-placeholder-token .border-zinc-200 {
+  border-color: #48484a;
+}
+.playground-theme-dark .playground-placeholder-token .bg-zinc-50\/60 {
+  background: rgba(58, 58, 60, 0.8);
+}

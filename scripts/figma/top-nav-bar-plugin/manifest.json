@@ -1,0 +1,7 @@
+{
+  "name": "Create top_nav_bar",
+  "id": "snatty-top-nav-bar-creator",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"]
+}
