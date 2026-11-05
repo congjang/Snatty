@@ -1,6 +1,6 @@
 /**
  * ⚠️  자동 생성 파일 — 직접 수정 금지  ⚠️
- * Snatty — Figma semantic (semantic.light + typography.mobile), global var 참조
+ * Snatty — Figma semantic (semantic.light + typography.mobile/tablet), global var 참조
  * 재생성: npm run tokens:build:semantic-css
  * 수동 수정 시 다음 토큰 재생성 때 덮어씌워집니다.
  * 소스: Figma 변수 (.cache/figma/raw/variables.local.*.json)
@@ -190,4 +190,27 @@
   --typographyFontWeightTitleM: var(--fontWeightBold);
   --typographyFontWeightTitleS: var(--fontWeightBold);
   --typographyFontWeightTitleXS: var(--fontWeightBold);
+}
+
+/* —— Typography (typography · tablet) —— 768px 이상: AppFrame의 md(768px)에서 프레임이 744px로 넓어지는 시점 */
+@media (min-width: 768px) {
+  :root {
+    --typographyFontSizeBodyL: var(--fontSize8);
+    --typographyFontSizeBodyM: var(--fontSize7);
+    --typographyFontSizeBodyS: var(--fontSize6);
+    --typographyFontSizeBodyXS: var(--fontSize5);
+    --typographyFontSizeCaptionM: var(--fontSize4);
+    --typographyFontSizeHeadlineL: var(--fontSize12);
+    --typographyFontSizeHeadlineM: var(--fontSize11);
+    --typographyFontSizeHeadlineS: var(--fontSize10);
+    --typographyFontSizeHeadlineXS: var(--fontSize9);
+    --typographyFontSizeLabelL: var(--fontSize8);
+    --typographyFontSizeLabelM: var(--fontSize7);
+    --typographyFontSizeLabelS: var(--fontSize6);
+    --typographyFontSizeLabelXS: var(--fontSize5);
+    --typographyFontSizeTitleL: var(--fontSize8);
+    --typographyFontSizeTitleM: var(--fontSize7);
+    --typographyFontSizeTitleS: var(--fontSize6);
+    --typographyFontSizeTitleXS: var(--fontSize5);
+  }
 }

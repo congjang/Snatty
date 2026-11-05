@@ -74,6 +74,8 @@ function toSectionedTokenData(raw, fallback) {
       // build-raw-tokens.mjs가 Figma 별칭 대상을 담아 준다. 없으면(옛 형식) 값으로 추측한다.
       aliasLight: raw.aliases?.light ?? {},
       aliasTypo: raw.aliases?.typography?.mobile ?? {},
+      typoTablet: raw.typography.tablet ?? null,
+      aliasTypoTablet: raw.aliases?.typography?.tablet ?? {},
     };
   }
 
@@ -114,6 +116,8 @@ function toSectionedTokenData(raw, fallback) {
     typoMobile: Object.keys(typoMobile).length ? typoMobile : fallbackTypo,
     aliasLight: {},
     aliasTypo: {},
+    typoTablet: null,
+    aliasTypoTablet: {},
   };
 }
 
@@ -139,6 +143,9 @@ function figmaGridToCssVar(key) {
   // Figma 변수의 "/" 구분은 이미 카멜케이스 키(gridGapL)로 내려오므로 그대로 변수명으로 쓴다
   return `--${key}`;
 }
+
+// Tailwind md(768px). AppFrame이 이 너비에서 max-w 390 → 744로 넓어지므로 Tablet 타이포도 같은 시점에 켠다
+const TABLET_MIN_WIDTH = 768;
 
 const TYPO_ROLES = ["Headline", "Title", "Body", "Label", "Caption"];
 
@@ -306,16 +313,18 @@ function buildPackageGridCss(global, light, aliasLight = {}) {
  * @param {Map<number, string>} fsMap
  * @param {Map<number, string>} fwMap
  */
-function typographyToCssVars(typoMobile, fsMap, fwMap, aliasTypo = {}, global = {}) {
+function typographyToCssVars(typoMobile, fsMap, fwMap, aliasTypo = {}, global = {}, base = null) {
   const lines = [];
   const fam = typoMobile.typographyFontFamily;
-  if (fam != null) {
+  if (fam != null && !base) {
     const famKey = aliasTarget(aliasTypo.typographyFontFamily, global) ?? "fontFamily";
     lines.push(`  --typographyFontFamily: var(--${famKey});`);
   }
 
   for (const k of Object.keys(typoMobile).sort()) {
     if (k === "typographyFontFamily") continue;
+    // 태블릿 블록: 모바일과 값이 같은 변수는 다시 쓰지 않는다
+    if (base && Number(base[k]) === Number(typoMobile[k])) continue;
     const fs = k.match(/^typographyFontSize(.+)$/);
     if (fs) {
       const sp = splitTypoRole(fs[1]);
@@ -370,7 +379,7 @@ async function main() {
     : await loadTokensFromExport();
   const fallbackData = null;
 
-  const { global, light, typoMobile, aliasLight, aliasTypo } = toSectionedTokenData(rawData, fallbackData);
+  const { global, light, typoMobile, aliasLight, aliasTypo, typoTablet, aliasTypoTablet } = toSectionedTokenData(rawData, fallbackData);
   if (!global || typeof global !== "object") {
     throw new Error(`Missing global.value-like tokens in ${inputPath ?? "Figma 내보내기"}`);
   }
@@ -435,10 +444,24 @@ async function main() {
     const fsMap = buildFontSizeValueToKey(global);
     const fwMap = buildFontWeightValueToKey(global);
     const typoLines = typographyToCssVars(typoMobile, fsMap, fwMap, aliasTypo, global);
+    // Figma typography의 Tablet 모드 → 768px 이상에서 같은 변수 이름으로 덮어쓴다
+    const tabletLines = typoTablet
+      ? typographyToCssVars(typoTablet, fsMap, fwMap, aliasTypoTablet, global, typoMobile)
+      : [];
+    const tabletBlock = tabletLines.length
+      ? `
+/* —— Typography (typography · tablet) —— ${TABLET_MIN_WIDTH}px 이상: AppFrame의 md(768px)에서 프레임이 744px로 넓어지는 시점 */
+@media (min-width: ${TABLET_MIN_WIDTH}px) {
+  :root {
+${tabletLines.map((l) => "  " + l).join("\n")}
+  }
+}
+`
+      : "";
 
     const header = `/**
  * ⚠️  자동 생성 파일 — 직접 수정 금지  ⚠️
- * Snatty — Figma semantic (semantic.light + typography.mobile), global var 참조
+ * Snatty — Figma semantic (semantic.light + typography.mobile/tablet), global var 참조
  * 재생성: npm run tokens:build:semantic-css
  * 수동 수정 시 다음 토큰 재생성 때 덮어씌워집니다.
  * 소스: Figma 변수 (.cache/figma/raw/variables.local.*.json)
@@ -455,7 +478,7 @@ ${gridLines.join("\n")}
   /* —— Typography (typography · mobile) —— */
 ${typoLines.join("\n")}
 }
-`;
+${tabletBlock}`;
 
     await writeFile(SEMANTIC_OUT, header + body, "utf8");
     console.log(

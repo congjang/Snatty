@@ -87,7 +87,7 @@ node scripts/figma/build-semantic-css.mjs --out-dir /tmp/css-check
 | `../adailyrecord-design-tokens/css/design-tokens.css` | `build-semantic-css.mjs --mode global` | global, 여러 제품 공유 |
 | `../adailyrecord-design-tokens/css/grid.css` | 〃 | Snatty는 semantic.css에 그리드 포함되어 생략 가능 |
 | `src/app/design-tokens/primitives.css` | 〃 | 패키지 global의 로컬 복사본 |
-| `src/app/design-tokens/semantic.css` | `build-semantic-css.mjs --mode semantic` | Snatty 전용 색·그리드·타이포 |
+| `src/app/design-tokens/semantic.css` | `build-semantic-css.mjs --mode semantic` | Snatty 전용 색·그리드·타이포. 타이포는 Figma Mobile 값이 기본이고, Tablet 값은 뷰포트 768px 이상(`@media (min-width: 768px)`)에서 같은 변수 이름을 덮어쓴다(모바일과 값이 같은 변수는 생략) |
 
 ---
 
