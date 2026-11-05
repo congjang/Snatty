@@ -23,8 +23,7 @@
 
 ### 2) remote 설정
 
-- `origin`이 이미 아래 URL로 설정되어 있었음:
-  - `https://github.com/congjang/remind.git`
+- `origin`이 이미 설정되어 있었음 (저장소 이전으로 주소는 삭제함)
 
 ### 3) 원격 업로드 여부
 
