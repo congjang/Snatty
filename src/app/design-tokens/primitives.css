@@ -1,0 +1,132 @@
+/**
+ * ⚠️  자동 생성 파일 — 직접 수정 금지  ⚠️
+ * @adailyrecord/design-tokens — Figma `global.value` 프리미티브
+ * 재생성: npm run tokens:figma:export && npm run tokens:figma:build
+ * 수동 수정 시 다음 토큰 재생성 때 덮어씌워집니다.
+ */
+:root {
+  /* —— Color —— */
+  --colorBlackOpacity10: #00000019;
+  --colorBlackOpacity20: #00000033;
+  --colorBlackOpacity30: #0000004c;
+  --colorBlackOpacity40: #00000066;
+  --colorBlackOpacity50: #0000007f;
+  --colorBlackOpacity60: #00000099;
+  --colorBlackOpacity70: #000000b2;
+  --colorBlackOpacity80: #000000cc;
+  --colorBlackOpacity90: #000000e5;
+  --colorCoral100: #ff4733;
+  --colorCoral200: #ff6150;
+  --colorCoral300: #ff7566;
+  --colorCoral400: #ff877a;
+  --colorCoral500: #ff9a8e;
+  --colorCoral600: #ffaca3;
+  --colorGray10: #18181a;
+  --colorGray16: #252629;
+  --colorGray22: #35363a;
+  --colorGray26: #3e4045;
+  --colorGray32: #4d4e55;
+  --colorGray39: #5e6068;
+  --colorGray45: #6d6e78;
+  --colorGray52: #7e808a;
+  --colorGray58: #8e9099;
+  --colorGray64: #9ea0a7;
+  --colorGray69: #abadb3;
+  --colorGray74: #b9bac0;
+  --colorGray79: #c6c7cc;
+  --colorGray84: #d4d4d8;
+  --colorGray89: #e1e2e4;
+  --colorGray92: #e9e9eb;
+  --colorGray95: #f1f1f2;
+  --colorGray98: #f9f9fa;
+  --colorGreen100: #03584d;
+  --colorGreen150: #036252;
+  --colorGreen200: #04725f;
+  --colorGreen250: #05856f;
+  --colorGreen300: #06937b;
+  --colorGreen350: #07a281;
+  --colorGreen400: #08b08c;
+  --colorGreen450: #1dbb99;
+  --colorGreen50: #004d45;
+  --colorGreen500: #3cc2a5;
+  --colorGreen550: #72cfbb;
+  --colorGreen600: #9dded0;
+  --colorWhite: #ffffff;
+  --colorWhiteOpacity10: #ffffff19;
+  --colorWhiteOpacity20: #ffffff33;
+  --colorWhiteOpacity30: #ffffff4c;
+  --colorWhiteOpacity40: #ffffff66;
+  --colorWhiteOpacity50: #ffffff7f;
+  --colorWhiteOpacity60: #ffffff99;
+  --colorWhiteOpacity70: #ffffffb2;
+  --colorWhiteOpacity80: #ffffffcc;
+  --colorWhiteOpacity90: #ffffffe5;
+  --colorYellow100: #ffc300;
+  --colorYellow200: #ffcf33;
+  --colorYellow300: #ffd54c;
+  --colorYellow400: #ffdb66;
+  --colorYellow500: #ffe180;
+  --colorYellow600: #ffe799;
+  --colorYellow700: #ffedb2;
+  /* —— Spacing (숫자 → px) —— */
+  --spacing0: 0px;
+  --spacing104: 104px;
+  --spacing112: 112px;
+  --spacing12: 12px;
+  --spacing120: 120px;
+  --spacing128: 128px;
+  --spacing136: 136px;
+  --spacing144: 144px;
+  --spacing152: 152px;
+  --spacing16: 16px;
+  --spacing160: 160px;
+  --spacing2: 2px;
+  --spacing20: 20px;
+  --spacing24: 24px;
+  --spacing32: 32px;
+  --spacing36: 36px;
+  --spacing4: 4px;
+  --spacing40: 40px;
+  --spacing44: 44px;
+  --spacing48: 48px;
+  --spacing52: 52px;
+  --spacing56: 56px;
+  --spacing6: 6px;
+  --spacing64: 64px;
+  --spacing72: 72px;
+  --spacing8: 8px;
+  --spacing80: 80px;
+  --spacing88: 88px;
+  --spacing96: 96px;
+  /* —— Radius —— */
+  --radius2XL: 24px;
+  --radius2XS: 0px;
+  --radiusL: 12px;
+  --radiusM: 8px;
+  --radiusS: 4px;
+  --radiusXL: 16px;
+  --radiusXS: 2px;
+  /* —— Typography scale —— */
+  --fontSize1: 10px;
+  --fontSize10: 36px;
+  --fontSize11: 40px;
+  --fontSize12: 44px;
+  --fontSize13: 48px;
+  --fontSize14: 52px;
+  --fontSize15: 56px;
+  --fontSize2: 12px;
+  --fontSize3: 14px;
+  --fontSize4: 16px;
+  --fontSize5: 18px;
+  --fontSize6: 20px;
+  --fontSize7: 24px;
+  --fontSize8: 28px;
+  --fontSize9: 32px;
+  --fontWeightBold: 700;
+  --fontWeightExtraBold: 800;
+  --fontWeightLight: 300;
+  --fontWeightMedium: 600;
+  --fontWeightRegular: 400;
+  /* —— Font family —— */
+  --fontFamily: Pretendard, sans-serif;
+}

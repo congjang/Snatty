@@ -1,0 +1,50 @@
+{
+  "name": "snatty-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "tokens:figma:export": "node scripts/figma/export-variables.mjs --include-published",
+    "tokens:figma:build": "node scripts/figma/build-tokens.mjs",
+    "tokens:figma:domains": "node scripts/figma/build-typography.mjs && node scripts/figma/build-colors.mjs && node scripts/figma/import-plugin-tokens.mjs",
+    "tokens:figma:sync": "npm run tokens:figma:export && npm run tokens:figma:build && npm run tokens:figma:domains",
+    "tokens:build:semantic-css": "node scripts/figma/build-semantic-css.mjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "api:dev": "npm run dev --prefix server",
+    "api:install": "npm install --prefix server",
+    "api:db:generate": "npm run db:generate --prefix server",
+    "api:db:push": "npm run db:push --prefix server",
+    "api:test": "npm test --prefix server"
+  },
+  "dependencies": {
+    "@sentry/nextjs": "^10.73.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.37.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "tailwind-merge": "^2.6.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
+    "@storybook/react-webpack5": "^10.2.19",
+    "@svgr/webpack": "^8.1.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "eslint-plugin-storybook": "^10.2.19",
+    "storybook": "^10.2.19",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^3.2.7"
+  }
+}

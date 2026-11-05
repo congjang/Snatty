@@ -1,0 +1,24 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" fill="white"/>
+<circle cx="12" cy="12" r="10" fill="#FFCF33"/>
+<mask id="m0_wronged" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="20" height="20">
+  <circle cx="12" cy="12" r="10" fill="#FFCF33"/>
+</mask>
+<g mask="url(#m0_wronged)">
+  <!-- Left eye -->
+  <ellipse cx="9" cy="10.5" rx="1.1" ry="1.4" fill="#866243"/>
+  <!-- Right eye -->
+  <ellipse cx="15" cy="10.5" rx="1.1" ry="1.4" fill="#866243"/>
+  <!-- Eye shines (watery look) -->
+  <circle cx="9.5" cy="9.9" r="0.45" fill="white"/>
+  <circle cx="15.5" cy="9.9" r="0.45" fill="white"/>
+  <!-- Tear (left eye) -->
+  <path d="M8.8 12.2 Q8.2 13.5 8.8 14.3 Q9.3 14.8 9.8 14.1 Q10.1 13.3 9.6 12.3 Z" fill="#88BBFF"/>
+  <!-- Left eyebrow: inner HIGH, outer LOW (distressed/pleading) -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 9.1 Q9 7.7 10.8 8.2 Q9.3 7.5 7.5 8.5 Z" fill="#866243"/>
+  <!-- Right eyebrow: inner HIGH, outer LOW -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 9.1 Q15 7.7 13.2 8.2 Q14.7 7.5 16.5 8.5 Z" fill="#866243"/>
+  <!-- Mouth: downturned frown -->
+  <path d="M9 14.8 Q12 17.2 15 14.8 Q13.5 15.9 12 16 Q10.5 15.9 9 14.8Z" fill="#E17034"/>
+</g>
+</svg>
