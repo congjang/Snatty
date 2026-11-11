@@ -8,6 +8,7 @@ import { EmotionArea } from "../components/EmotionArea";
 import { EmotionPickerSheet } from "../components/EmotionPickerSheet";
 import { ToastMessage } from "../components/ToastMessage";
 import { emotionIdFromIconName } from "../lib/emotionFace";
+import { EMOTION_PICKER_ENABLED } from "../lib/featureFlags";
 import { suggestEmotion } from "../lib/recordSuggest";
 import { markRecordSynced, saveRecord } from "../lib/recordsStore";
 import { postQuickEntry } from "../lib/snattyApi";
@@ -45,7 +46,8 @@ export default function WritePage() {
     const name = suggestEmotion(text).emotion;
     return name ? emotionIdFromIconName(name) : null;
   }, [text]);
-  const emotion = chosenEmotion ?? suggestedEmotion;
+  // 감정 선택 기능이 꺼져 있으면(론칭 전) 감정을 저장하지 않는다.
+  const emotion = EMOTION_PICKER_ENABLED ? (chosenEmotion ?? suggestedEmotion) : null;
 
   useEffect(() => {
     textareaRef.current?.focus();
@@ -159,10 +161,10 @@ export default function WritePage() {
         <p className="w-full shrink-0 text-right font-[family-name:var(--typographyFontFamily)] text-[length:var(--typographyFontSizeCaptionM,10px)] leading-[1.2] text-[color:var(--colorElementBase1Disabled,rgba(0,0,0,0.3))]">
           {text.length}/{MAX_LENGTH}
         </p>
-        {!isEmpty && <EmotionArea emotion={emotion} onChange={() => setPickerOpen(true)} />}
+        {EMOTION_PICKER_ENABLED && !isEmpty && <EmotionArea emotion={emotion} onChange={() => setPickerOpen(true)} />}
       </div>
 
-      {pickerOpen && (
+      {EMOTION_PICKER_ENABLED && pickerOpen && (
         <EmotionPickerSheet
           selectedId={emotion}
           onClose={() => setPickerOpen(false)}

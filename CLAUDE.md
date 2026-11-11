@@ -9,7 +9,7 @@
 - **앱명:** snatty-app (마이크로 저널링 앱)
 - **플랫폼:** Next.js 16 (웹) + Fastify API 서버 (`server/`) + 미래 네이티브 (`native/`)
 - **주요 기술:** Next.js 16 App Router, React 19, Tailwind CSS 4, TypeScript 5 strict, Prisma 6, Fastify 5, Framer Motion 12
-- **1차 론칭 범위(2026-10-22 결정):** "지금 이 순간을 기록하는 것"만. 할 일·마감일·리마인더 등은 후순위 — 백업 태그 `backup/todo-reminder-2026-10-22`, 안내 `docs/deferred-todo-reminder.md`. 서버 리마인더·푸시 토큰 API는 유지(기능으로 추가 예정). 리스트·달력 보기 탭은 살리는 방향. **감정 기록은 1순위로 올림(2026-11-11)** — 얼굴·눈·눈썹·코·입 부품을 조합해 감정 얼굴과 한글 키워드를 만들고(`src/app/lib/emotionFace.ts`), 쓰기 화면에서 고른다(Figma 감정팝업·감정 영역 시안). 나머지 후순위 기능은 시안 없이 되살리거나 새로 설계하지 말 것
+- **1차 론칭 범위(2026-10-22 결정):** "지금 이 순간을 기록하는 것"만. 할 일·마감일·리마인더 등은 후순위 — 백업 태그 `backup/todo-reminder-2026-10-22`, 안내 `docs/deferred-todo-reminder.md`. 서버 리마인더·푸시 토큰 API는 유지(기능으로 추가 예정). 리스트·달력 보기 탭은 살리는 방향. **감정 기록은 1차 론칭에는 숨기고(1순위 아님, 2026-11-11 결정) 구현만 해 둠** — 얼굴·눈·눈썹·코·입 부품을 조합해 감정 얼굴과 한글 키워드를 만들고(`src/app/lib/emotionFace.ts`), 쓰기 화면의 감정 영역·팝업은 `NEXT_PUBLIC_FEATURE_EMOTION=true`로 켠다(`src/app/lib/featureFlags.ts`, 기본 꺼짐; 오픈 후 바로 켤 수 있게 준비). 나머지 후순위 기능은 시안 없이 되살리거나 새로 설계하지 말 것
 - **베이스 해상도:** 모바일 우선 — 390px 기준, 744px 태블릿 대응
 
 ---
@@ -192,6 +192,7 @@ npx prisma studio        # DB 관리 UI
 |------|------|-----------|------|
 | `NEXT_PUBLIC_SNATTY_API_URL` | `.env.local` | 선택 | API 서버 주소 (없으면 로컬 전용) |
 | `NEXT_PUBLIC_DEV_EMAIL` | `.env.local` | 개발 선택 | 개발용 이메일 인증 |
+| `NEXT_PUBLIC_FEATURE_EMOTION` | `.env.local` | 선택 | `true`면 기록하기 감정 선택 노출(기본 꺼짐, 바꾼 뒤 재빌드) |
 | `OPENWEATHERMAP_API_KEY` | `.env.local` | 날씨 기능 필수 | OWM API 키 |
 | `KAKAO_REST_API_KEY` | `.env.local` | 선택 | 역지오코딩(시·구·동 단위 한글 지역명) |
 | `DATABASE_URL` | `server/.env` | 서버 필수 | PostgreSQL 연결 문자열 |
