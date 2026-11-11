@@ -277,7 +277,7 @@ export const MOUTHS: EmotionPart[] = [
     name: "시무룩한",
     v: -0.6,
     a: -0.1,
-    nodes: [path("M9 14.8Q12 17.2 15 14.8Q13.5 15.9 12 16Q10.5 15.9 9 14.8Z", ORANGE)],
+    nodes: [line("M9.4 16Q12 13.6 14.6 16", ORANGE, 1.2)],
   },
   {
     name: "떨리는",
