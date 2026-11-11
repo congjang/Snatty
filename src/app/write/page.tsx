@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppFrame } from "../components/AppFrame";
 import { Button } from "../components/Button";
+import { EmotionArea } from "../components/EmotionArea";
+import { EmotionPickerSheet } from "../components/EmotionPickerSheet";
 import { ToastMessage } from "../components/ToastMessage";
+import { emotionIdFromIconName } from "../lib/emotionFace";
+import { suggestEmotion } from "../lib/recordSuggest";
 import { markRecordSynced, saveRecord } from "../lib/recordsStore";
 import { postQuickEntry } from "../lib/snattyApi";
 import { useWeatherSnapshot } from "../lib/useWeatherSnapshot";
@@ -24,6 +28,9 @@ export default function WritePage() {
 
   const [text, setText] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  /** 사용자가 감정 팝업에서 직접 고른 감정 id. 없으면 글 내용에서 추천한 감정을 쓴다. */
+  const [chosenEmotion, setChosenEmotion] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
   /** localStorage 쓰기 자체가 실패한 경우 — 서버 동기화 실패보다 심각(로컬에도 안 남음). */
   const [localSaveFailed, setLocalSaveFailed] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -32,6 +39,13 @@ export default function WritePage() {
   const toastTimeoutRef = useRef<number | null>(null);
 
   const isEmpty = text.trim().length === 0;
+
+  // 글에서 추천한 감정(키워드 규칙 기반). 사용자가 직접 고르면 그 선택이 우선한다.
+  const suggestedEmotion = useMemo(() => {
+    const name = suggestEmotion(text).emotion;
+    return name ? emotionIdFromIconName(name) : null;
+  }, [text]);
+  const emotion = chosenEmotion ?? suggestedEmotion;
 
   useEffect(() => {
     textareaRef.current?.focus();
@@ -67,7 +81,7 @@ export default function WritePage() {
     setLocalSaveFailed(false);
 
     const payload = text.trim();
-    const record = await saveRecord({ text: payload, weather });
+    const record = await saveRecord({ text: payload, weather, emotion: emotion ?? undefined });
 
     if (!record.persisted) {
       // 로컬 저장 자체가 실패 — "저장됨"으로 돌아가면 실제로는 유실되므로 쓰기 화면에 머문다.
@@ -91,7 +105,7 @@ export default function WritePage() {
       try {
         await postQuickEntry({
           body: payload,
-          emotionTagIds: [],
+          emotionTagIds: emotion ? [`emotion:${emotion}`] : [],
           source: "app",
           weather,
           clientMutationId: record.id,
@@ -145,7 +159,19 @@ export default function WritePage() {
         <p className="w-full shrink-0 text-right font-[family-name:var(--typographyFontFamily)] text-[length:var(--typographyFontSizeCaptionM,10px)] leading-[1.2] text-[color:var(--colorElementBase1Disabled,rgba(0,0,0,0.3))]">
           {text.length}/{MAX_LENGTH}
         </p>
+        {!isEmpty && <EmotionArea emotion={emotion} onChange={() => setPickerOpen(true)} />}
       </div>
+
+      {pickerOpen && (
+        <EmotionPickerSheet
+          selectedId={emotion}
+          onClose={() => setPickerOpen(false)}
+          onConfirm={(id) => {
+            setChosenEmotion(id);
+            setPickerOpen(false);
+          }}
+        />
+      )}
 
       <div
         aria-live="polite"

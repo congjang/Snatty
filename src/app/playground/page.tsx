@@ -25,6 +25,7 @@ import { ToastMessage, type ToastMessageVariant } from "../components/ToastMessa
 import { FunctionalIconGrid } from "../components/FunctionalIconGrid";
 import { WeatherIconGrid } from "../components/WeatherIconGrid";
 import { EmotionIconGrid } from "../components/EmotionIconGrid";
+import { EmotionFaceGallery } from "../components/EmotionFaceGallery";
 import { CalendarDay, type CalendarDayState } from "../components/CalendarDay";
 import type { SelectionMode } from "../components/CalendarMonth";
 import { Fab } from "../components/Fab";
@@ -628,6 +629,16 @@ export default function PlaygroundPage() {
               <div className="rounded-lg bg-white p-3">
                 <EmotionIconGrid size={emotionIconSize} />
               </div>
+            </div>
+          </section>
+
+          {/* Emotion Faces — 부품 조합 */}
+          <section className="space-y-3">
+            <h2 className="text-xs font-semibold text-zinc-500">
+              Emotion Faces (조합)
+            </h2>
+            <div className="rounded-xl bg-white p-3">
+              <EmotionFaceGallery />
             </div>
           </section>
 
